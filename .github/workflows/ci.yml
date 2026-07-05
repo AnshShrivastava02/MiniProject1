@@ -22,14 +22,44 @@ jobs:
       matrix:
         node-version: [18,20,22]
     steps:
+      - name: cache dependencies
+        uses: actions/cache@v3
+        with: 
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
       - name: Get the code
         uses: actions/checkout@v7.0.0
       - name: Set Up Node
         uses: actions/setup-node@v6
         with:
           node-version: ${{matrix.node-version}}
-          cache: 'npm'
       - name: Install dependencies
         run : npm ci
       - name: Run tests
         run: npm test
+  build:
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7.0.0
+      - name: Set node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Create Build Output
+        run: |
+          mkdir dist
+          echo "Build Created on $(date)" > dist/build-info.txt
+          cp src/math.js dist/
+      - name : Upload artifact
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: 'app build'
+          path: dist/
+
+
+
