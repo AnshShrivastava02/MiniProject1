@@ -67,7 +67,7 @@ jobs:
       - name: Get the code
         uses: actions/checkout@v7.0.0
       - name: Build docker image
-        run: docker build -t miniproject1:${{github.sha}}.
+        run: docker build -t miniproject1:${{github.sha}} .
       - name: Verify Image
         run: docker image miniproject1
   deploy:
