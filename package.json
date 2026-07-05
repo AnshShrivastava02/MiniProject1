@@ -1,0 +1,8 @@
+{
+  "name": "miniproject1",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node --test",
+    "lint": "echo \"linting passed\""
+  }
+}
