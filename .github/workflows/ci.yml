@@ -60,6 +60,19 @@ jobs:
         with:
           name: 'app build'
           path: dist/
+  deploy:
+    needs: build
+    runs-on: macos-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: 'app build'
+      - name: Deploy
+        run: echo "Deploying build created on production"
+
 
 
 
