@@ -69,7 +69,7 @@ jobs:
       - name: Build docker image
         run: docker build -t miniproject1:${{github.sha}} .
       - name: Verify Image
-        run: docker image miniproject1
+        run: docker images miniproject1
   deploy:
     needs: build
     runs-on: ubuntu-latest
